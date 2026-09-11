@@ -12,8 +12,8 @@ node_modules/
 **/node_modules/
 
 # 运行产物
-skill/out/report.last.json
-skill/out/*.tmp
+out/report.last.json
+out/*.tmp
 **/*.log
 
 # IDE / 编辑器

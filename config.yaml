@@ -1,0 +1,70 @@
+# ACT Cube 卡片评测 skill —— 统一配置登记
+#
+# 本文件是 skill 工程的"唯一 YAML 主登记"，所有跨主题配置集中在这里：
+#   - cards:    评测卡片清单
+#   - agent:    AI agent 调用参数
+#
+# 脚本侧的"配置加载逻辑"由 config/index.js 提供。
+# 本 yaml 仅为数据，不承载 ESLint 规则登记（ESLint 侧真实来源见 eslint/card.config.mjs）。
+#
+# 加载优先级（高 → 低）：
+#   1) 环境变量（ACT_AGENT_* / CARDS_ROOT / CARDS_SUBDIR）
+#   2) 本文件（config.yaml）
+#
+# 解析能力：
+#   - 不引入 js-yaml 依赖，自己实现一个最小解析器（见 config/index.js 的 parseSimpleYaml）
+#   - 兼容 YAML 注释 (#) 和引号包裹的字符串
+#   - 多行字符串用 | + 缩进（保留换行）
+#
+# 新增主题直接在这里增加一段即可。
+
+# ============================================================
+# cards: 评测卡片清单
+# ============================================================
+cards:
+  - hello-cube
+  - user-profile
+  - feed-list
+  - counter
+  - product-card
+  - tag-list
+  - search-list
+  - switches-panel
+  - todo-app
+  - chart-bar
+  - order-list
+  - trade-detail
+  - payment-confirm
+  - balance-overview
+  - chart-f2-bar
+  - chart-f2-line
+  - chart-f2-pie
+  - chart-f2-area
+
+# ============================================================
+# agent: AI agent 调用参数
+# baseURL 支持 OpenAI 兼容协议（POST {baseURL}/chat/completions）
+# ============================================================
+agent:
+  enabled: true
+  provider: minimax
+  baseURL: https://api.minimax.cn/v1
+  apiKey: ""
+  model: MiniMax-M3
+  temperature: 0.2
+  maxTokens: 4096
+  timeoutMs: 120000
+  minCases: 8
+  # multi-line string 用 | + 缩进：保留换行
+  systemPrompt: |
+    你是 ACT Cube 卡片评测助手。你的任务是根据卡片代码（main.vue、manifest.json、dist/main.js）与测试案例描述，生成 node:test 格式的 main.test.js。
+
+    要求：
+    1. 仅生成 node:test + node:assert/strict 的断言代码，不要引入额外依赖
+    2. 用 require('../../config') 加载配置；用 require('../../cube-engine') 拿 createEngine
+    3. 通过 CARDS_ROOT / CARDS_SUBDIR 环境变量定位卡片，env 给定时优先 env
+    4. 不要包含调试 / console.log 噪音
+    5. 测试文件名必须是 main.test.js
+    6. 每个 test 用 describe 包裹，描述中文清晰
+    7. 不需要构建 dist 产物——直接读 src/<card>/<subdir>/<card>/main.vue 与 dist/main.js（dist 已存在）
+    8. 若 case.md 提到异步，确认用 createEngine 后用 await setTimeout 模拟

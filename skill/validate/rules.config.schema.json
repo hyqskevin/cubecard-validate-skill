@@ -1,0 +1,31 @@
+{
+  "title": "rules.config.json",
+  "description": "validate/ 下的静态规则注册表。每条规则指定 id / module / severity / enabled / options。ESLint 规则不在此登记，真实来源见 eslint/card.config.mjs。",
+  "type": "object",
+  "required": ["rules"],
+  "properties": {
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "module", "severity"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"
+          },
+          "module": {
+            "type": "string",
+            "description": "相对 skill 根目录的模块路径（如 './validate/rules/structure/V1-manifest'）。"
+          },
+          "severity": {
+            "enum": ["error", "warning", "info"]
+          },
+          "enabled": { "type": "boolean" },
+          "description": { "type": "string" },
+          "options": { "type": "object" }
+        }
+      }
+    }
+  }
+}

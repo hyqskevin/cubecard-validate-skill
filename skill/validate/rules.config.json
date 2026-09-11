@@ -1,0 +1,186 @@
+{
+  "rules": [
+    {
+      "id": "V1",
+      "module": "./validate/rules/structure/V1-manifest",
+      "severity": "error",
+      "enabled": true,
+      "description": "manifest.json schema 校验"
+    },
+    {
+      "id": "V2",
+      "module": "./validate/rules/structure/V2-tags",
+      "severity": "warning",
+      "enabled": true,
+      "description": "标签白名单",
+      "options": {
+        "allowedTags": ["F2Chart", "f2-chart", "F2Line", "F2Interval", "F2Pie", "F2Point", "F2Area", "F2Candlestick", "F2Radar"],
+        "_comment": "额外追加：阿里 F2 图表组件（F2Chart 是宿主内置组件，src/chart-f2-* 案例使用）"
+      }
+    },
+    {
+      "id": "V3",
+      "module": "./validate/rules/structure/V3-attrs",
+      "severity": "warning",
+      "enabled": true,
+      "description": "属性白名单（bind / event / 普通）",
+      "options": {
+        "allowedAttrs": [],
+        "allowedBindKeys": [],
+        "allowedEvents": [],
+        "_comment": "数组形式传入 V3：每条是补充白名单（V3 已内置常用项，本字段 = 额外追加）"
+      }
+    },
+    {
+      "id": "V4",
+      "module": "./validate/rules/logic/V4-expr-ref",
+      "severity": "warning",
+      "enabled": true,
+      "description": "bind 表达式引用合法性"
+    },
+    {
+      "id": "V5",
+      "module": "./validate/rules/logic/V5-events",
+      "severity": "warning",
+      "enabled": true,
+      "description": "事件方法存在性"
+    },
+    {
+      "id": "V6",
+      "module": "./validate/rules/logic/V6-vfor",
+      "severity": "warning",
+      "enabled": true,
+      "description": "v-for 数据源存在性"
+    },
+    {
+      "id": "V7",
+      "module": "./validate/rules/logic/V7-vif",
+      "severity": "warning",
+      "enabled": true,
+      "description": "v-if 表达式合法性"
+    },
+    {
+      "id": "V8",
+      "module": "./validate/rules/structure/V8-lifecycle",
+      "severity": "error",
+      "enabled": true,
+      "description": "生命周期白名单"
+    },
+    {
+      "id": "V9",
+      "module": "./validate/rules/logic/V9-dead-code",
+      "severity": "info",
+      "enabled": true,
+      "description": "data/methods 死代码"
+    },
+    {
+      "id": "V10",
+      "module": "./validate/rules/structure/V10-structure",
+      "severity": "warning",
+      "enabled": true,
+      "description": "template/script/style 完整性"
+    },
+    {
+      "id": "V11",
+      "module": "./validate/rules/style/V11-css",
+      "severity": "warning",
+      "enabled": true,
+      "description": "<style> 段词法校验（单位/伪类/url）"
+    },
+    {
+      "id": "V12",
+      "module": "./validate/rules/security/V12-xss",
+      "severity": "error",
+      "enabled": true,
+      "description": "XSS / 不安全执行（OWASP A03）"
+    },
+    {
+      "id": "V13",
+      "module": "./validate/rules/business/V13-no-nested-vfor",
+      "severity": "warning",
+      "enabled": true,
+      "description": "v-for 不能嵌套 v-for"
+    },
+    {
+      "id": "V14",
+      "module": "./validate/rules/business/V14-business-logic",
+      "severity": "warning",
+      "enabled": true,
+      "description": "业务逻辑完备性 / 未定义变量引用 / 三元嵌套"
+    },
+    {
+      "id": "V15",
+      "module": "./validate/rules/business/V15-jsdoc",
+      "severity": "warning",
+      "enabled": true,
+      "description": "方法/lifecycle 缺 JSDoc 注释"
+    },
+    {
+      "id": "V16",
+      "module": "./validate/rules/ecosystem/V16-f2-chart",
+      "severity": "warning",
+      "enabled": true,
+      "description": "阿里 F2 图表 props 校验"
+    },
+    {
+      "id": "V17",
+      "module": "./validate/rules/ecosystem/V17-mpaas-api",
+      "severity": "error",
+      "enabled": true,
+      "description": "requireModule(mpaas_jsapi) 调用合法性"
+    },
+    {
+      "id": "V18",
+      "module": "./validate/rules/data/V18-data-bounds",
+      "severity": "error",
+      "enabled": true,
+      "description": "data 数组/对象边界"
+    },
+    {
+      "id": "V19",
+      "module": "./validate/rules/data/V19-flow-sequence",
+      "severity": "warning",
+      "enabled": true,
+      "description": "交易流程序列图 + 串行调用"
+    },
+    {
+      "id": "V20",
+      "module": "./validate/rules/ecosystem/V20-common-module",
+      "severity": "warning",
+      "enabled": true,
+      "description": "common 公共方法引用校验",
+      "options": {
+        "allowedNames": [],
+        "maxImports": 5,
+        "baseName": "common",
+        "_comment": "allowedNames：common/ 下允许 require 的子模块名（默认 toast/format/date/validator）；baseName：common 文件夹名；禁止 @ 前缀（npm 形式）"
+      }
+    },
+    {
+      "id": "V21",
+      "module": "./validate/rules/ecosystem/V21-env-vars",
+      "severity": "info",
+      "enabled": true,
+      "description": "env 环境配置文件引用校验（require('.env.xxx')）",
+      "options": {
+        "allowedEnvNames": [],
+        "warnOnMultiple": true,
+        "_comment": "allowedEnvNames：允许引用的环境名（默认 sit/uat/prod/pre/gray）；warnOnMultiple：单 script 引多个不同 env 时是否告警"
+      }
+    },
+    {
+      "id": "V22",
+      "module": "./validate/rules/structure/V22-text-no-nested",
+      "severity": "warning",
+      "enabled": true,
+      "description": "text / external-richtext 不可嵌套其他组件（只能含文本值）"
+    },
+    {
+      "id": "V23",
+      "module": "./validate/rules/ecosystem/V23-timer-cleanup",
+      "severity": "warning",
+      "enabled": true,
+      "description": "setTimeout / setInterval 必须在 didDisappear 中清理"
+    }
+  ]
+}
